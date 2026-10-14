@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <meta name="theme-color" content="#004556" />
+  <title>Moeve Field Intelligence · Alicante Pilot · Field Sync</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="app-shell">
+  <header class="app-header">
+    <div class="brand-lockup">
+      <div class="moeve-wordmark">moeve</div>
+      <div class="product-name">Field Intelligence · Alicante Pilot</div>
+    </div>
+    <div class="header-actions"><span id="saveStatus" class="save-status">Guardando…</span><button id="exportBtn" class="icon-btn" title="Enviar / exportar visita">⇧</button></div>
+  </header>
+
+  <section class="route-toolbar">
+    <div class="route-copy">
+      <span class="route-eyebrow">RUTA DE VISITAS</span>
+      <b id="routeProgress">Preparando ruta…</b>
+    </div>
+    <div class="route-nav">
+      <button id="prevStop" class="round-btn" aria-label="Parada anterior">‹</button>
+      <button id="nextStop" class="round-btn" aria-label="Siguiente parada">›</button>
+    </div>
+  </section>
+
+  <section class="station-toolbar">
+    <label for="stationSelect">Moeve seleccionada para briefing / visita</label>
+    <select id="stationSelect"><option>Cargando estaciones…</option></select>
+    <div class="source-line">
+      <span id="dataSource" class="source-pill">Conectando con fuente pública…</span>
+      <button id="refreshData" class="link-btn">Actualizar</button>
+    </div>
+  </section>
+
+  <main>
+    <section class="map-shell">
+      <div id="map"></div>
+      <div class="pilot-scope-row" aria-label="Zona de piloto">
+        <button class="scope-btn active" data-scope="pilot">Piloto completo</button>
+        <button class="scope-btn" data-scope="corridor">Ruta ≤8 km</button>
+        <button class="scope-btn" data-scope="alicante">Alicante provincia</button>
+      </div>
+      <div class="map-filter-row">
+        <button class="map-filter active" data-filter="all">Todas</button>
+        <button class="map-filter" data-filter="MOEVE">Moeve</button>
+        <button class="map-filter" data-filter="REPSOL">Repsol</button>
+        <button class="map-filter" data-filter="PLENERGY">Plenergy</button>
+        <button class="map-filter" data-filter="BALLENOIL">Ballenoil</button>
+        <button class="map-filter" data-filter="OTHER">Otros</button>
+      </div>
+      <div class="legend-card">
+        <span><i class="legend-dot pressure-green"></i>Contexto / baja</span>
+        <span><i class="legend-dot pressure-yellow"></i>Potencial</span>
+        <span><i class="legend-dot pressure-red"></i>Relevante</span>
+      </div>
+    </section>
+
+    <section class="content-sheet">
+      <div class="sheet-handle"></div>
+      <div id="stationHero"></div>
+
+      <nav class="tabs" aria-label="Secciones">
+        <button class="tab active" data-view="route">Ruta</button>
+        <button class="tab" data-view="copilot">Copiloto</button>
+        <button class="tab" data-view="customer">Cliente</button>
+        <button class="tab" data-view="visit">Visita</button>
+        <button class="tab" data-view="todo">TO DO</button>
+        <button class="tab" data-view="alerts">Alertas</button>
+      </nav>
+
+      <section id="route" class="view active"></section>
+      <section id="copilot" class="view"></section>
+      <section id="customer" class="view"></section>
+      <section id="visit" class="view"></section>
+      <section id="todo" class="view"></section>
+      <section id="alerts" class="view"></section>
+    </section>
+  </main>
+</div>
+
+<div id="modalBackdrop" class="modal-backdrop hidden">
+  <div class="modal" role="dialog" aria-modal="true">
+    <button id="closeModal" class="modal-close">×</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="data/fallback.js"></script>
+<script src="app.js"></script>
+<script>if('serviceWorker' in navigator && location.protocol.startsWith('http')){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));}</script>
+</body>
+</html>
